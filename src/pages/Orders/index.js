@@ -75,7 +75,7 @@ export default function Orders() {
         </DivCol>
         <DivCol>
           <DivFlex>
-            <MdPeople color={pallete.primary} />
+            <MdPeople size={20} color={pallete.primary} />
             <span>2</span>
           </DivFlex>
 

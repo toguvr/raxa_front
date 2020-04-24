@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { MdHome, MdPersonOutline } from 'react-icons/md';
+import { MdHome, MdPerson } from 'react-icons/md';
 import logo from '~/assets/logo.png';
 import { Container, Content, Profile, LinkPage } from './styles';
 import { routes } from '~/routes';
@@ -26,7 +26,7 @@ export default function Header() {
         }
         size={30}
       />
-      <MdPersonOutline
+      <MdPerson
         onClick={() => history.push(routes.profile)}
         cursor="pointer"
         color={
