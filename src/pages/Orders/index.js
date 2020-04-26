@@ -138,7 +138,7 @@ export default function Orders() {
 
   return (
     <Container>
-      <strong>Suas Contas</strong>
+      <strong>Seus Raxas</strong>
       <header>
         <Search>
           <MdSearch color="#999999" size={16} />
