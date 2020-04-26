@@ -169,11 +169,18 @@ export default function Orders() {
                   .indexOf(filter.toLowerCase()) > -1
             )
             .map(project => {
+              console.log(project);
               return (
                 <Card>
                   <DivFlex>
                     <div style={{ width: '40px' }}>
-                      <Avatar width="40" name={project.projects[0].title} />
+                      <Avatar
+                        width="40"
+                        name={
+                          project.projects[0].length > 0 &&
+                          project.projects[0].title
+                        }
+                      />
                     </div>
 
                     <DivCol>
