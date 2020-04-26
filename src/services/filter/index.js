@@ -1,16 +1,13 @@
 import axios from 'axios';
 import { baseURL } from '~/services';
 
-export async function filterResult(filterType, filter) {
+export async function filterResult() {
   const token = localStorage.getItem('token');
-  const response = await axios.get(
-    `${baseURL}/filter?${filterType}=${filter}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  const response = await axios.get(`${baseURL}/members`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   return response;
 }

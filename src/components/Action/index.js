@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { MdRemoveRedEye, MdModeEdit, MdDeleteForever } from 'react-icons/md';
+import {
+  MdRemoveRedEye,
+  MdModeEdit,
+  MdDeleteForever,
+  MdAdd,
+  MdGroupAdd,
+} from 'react-icons/md';
 import { ClickAwayListener } from '@material-ui/core';
 import { Container, ActionList } from './styles';
 
@@ -22,8 +28,8 @@ export default function Action({ view, edit, del }) {
                   setVisible(false);
                 }}
               >
-                <MdRemoveRedEye color="#8E5BE8" size={15} />
-                <span>Visualizar</span>
+                <MdGroupAdd color="#8E5BE8" size={15} />
+                <span>Convidar</span>
               </li>
 
               <hr />

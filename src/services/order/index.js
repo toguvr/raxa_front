@@ -40,7 +40,7 @@ export async function updateOrder(data, orderId) {
 export async function deleteOrder(orderId) {
   const token = localStorage.getItem('token');
 
-  const response = await axios.delete(`${baseURL}/orders/${orderId}`, {
+  const response = await axios.delete(`${baseURL}/projects/${orderId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

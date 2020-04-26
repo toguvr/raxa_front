@@ -64,22 +64,38 @@ export const Search = styled.div`
 export const PopUp = styled.div`
   background: #ffffff 0% 0% no-repeat padding-box;
   box-shadow: 0px 0px 10px #00000033;
-  border-radius: 4px;
+  border-radius: 25px;
   display: flex;
   flex-direction: column;
+  align-items: stretch;
   justify-content: flex-start;
-  padding: 25px;
+  padding: 20px;
   width: 100%;
-  min-width: 450px;
-  height: 353px;
+  min-width: 300px;
 
   strong {
-    margin-bottom: 4px;
+    margin-bottom: 20px;
   }
 
   img {
     width: 100%;
     height: 100px;
+  }
+
+  button {
+    margin: 5px 0 0;
+    height: 45px;
+    background: ${pallete.primary} 0% 0% no-repeat padding-box;
+    border-radius: 4px;
+    font-weight: bold;
+    color: #fff;
+    border: 0;
+    font-size: 16px;
+    transition: background 0.3s;
+
+    &:hover {
+      background: ${darken(0.08, pallete.primary)};
+    }
   }
 `;
 
@@ -92,6 +108,7 @@ export const Card = styled.div`
   justify-content: space-between;
   display: flex;
   align-items: center;
+  margin-bottom: 8px;
   border: 2px solid ${pallete.primary};
   box-shadow: 0px 0px 10px #00000033;
 
@@ -114,4 +131,14 @@ export const Title = styled.span`
   color: black;
   font-size: 16px;
   align-self: flex-start;
+`;
+
+export const Body = styled.div`
+  overflow-y: scroll;
+  width: 100%;
+  height: 40vh;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
