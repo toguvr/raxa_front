@@ -41,6 +41,6 @@ Avatar.propTypes = {
 Avatar.defaultProps = {
   color: pallete.primary,
   width: 35,
-  name: 'Fast Feet',
+  name: 'RAXA',
   url: null,
 };

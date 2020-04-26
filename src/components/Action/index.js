@@ -8,8 +8,9 @@ import {
 } from 'react-icons/md';
 import { ClickAwayListener } from '@material-ui/core';
 import { Container, ActionList } from './styles';
+import { pallete } from '~/styles';
 
-export default function Action({ view, edit, del }) {
+export default function Action({ view, edit, del, viewDetail }) {
   const [visible, setVisible] = useState(false);
 
   function handleToggleVisible() {
@@ -20,6 +21,21 @@ export default function Action({ view, edit, del }) {
       <Container>
         <div onClick={handleToggleVisible}>...</div>
         <ActionList visible={visible}>
+          {viewDetail && (
+            <>
+              <li
+                onClick={() => {
+                  viewDetail();
+                  setVisible(false);
+                }}
+              >
+                <MdRemoveRedEye color={pallete.primary} size={15} />
+                <span>Detalhar</span>
+              </li>
+
+              <hr />
+            </>
+          )}
           {view && (
             <>
               <li
@@ -35,6 +51,7 @@ export default function Action({ view, edit, del }) {
               <hr />
             </>
           )}
+
           {edit && (
             <li
               onClick={() => {

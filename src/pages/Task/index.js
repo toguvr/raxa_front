@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { MdSearch, MdAdd, MdPeople, MdContentCopy } from 'react-icons/md';
+import {
+  MdSearch,
+  MdAdd,
+  MdPeople,
+  MdContentCopy,
+  MdTrendingUp,
+  MdTrendingDown,
+} from 'react-icons/md';
 import { FaWhatsapp } from 'react-icons/fa';
 import Dialog from '@material-ui/core/Dialog';
 import { format, parseISO } from 'date-fns';
@@ -22,6 +29,9 @@ import {
   Description,
   Card,
   Body,
+  Header,
+  Paid,
+  ToPay
 } from './styles';
 import { DivFlex, pallete, DivCol } from '~/styles';
 import { filterResult } from '~/services/filter';
@@ -29,11 +39,12 @@ import { routes } from '~/routes';
 import { deleteOrder } from '~/services/order';
 import { holdOrder } from '~/store/order/reducer';
 import api from '~/services/api';
+import numeral from 'numeral';
 
-export default function Orders() {
+import 'numeral/locales/pt-br';
+
+export default function Task() {
   const history = useHistory();
-  const dispatch = useDispatch();
-  const queryParams = new URLSearchParams(useLocation().search);
 
   const [type, setType] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -42,37 +53,26 @@ export default function Orders() {
   const [open, setOpen] = useState(false);
   const [currentOrder, setCurrentOrder] = useState(false);
   const [values, setValues] = useState({ title: '', desription: '' });
+  const [profile, setProfile] = useState(false);
 
-  const url = `${process.env.REACT_APP_URL}/orders?code=${currentOrder.id}`;
-  const msg = `Entra ai pra facilitar o raxa da nossa conta "${currentOrder.title}" ${url}
-  #Raxa`;
-
-  const newLink = `https://api.whatsapp.com/send?text=${msg}`;
-  const invitationCode = queryParams.get('code');
-
-  async function enterMember() {
+  async function getProfile(data) {
     try {
       const token = localStorage.getItem('token');
-      const response = await api.post(`/members/${invitationCode}`, null, {
+      const response = await api.get('/users', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      getOrder();
-      toast.success('Entrou pro raxa');
-    } catch (e) {
-      toast.error('não foi possível entrar pro raxa');
-      setLoading(false);
-      getOrder();
-    }
+      setProfile(response.data[0]);
+    } catch (e) {}
   }
+
   useEffect(() => {
-    if (invitationCode) {
-      setType('codeInvited');
-      setOpen(true);
-    }
+    getProfile();
   }, []);
+
+  const total = 0;
 
   async function getOrder() {
     const response = await filterResult();
@@ -138,17 +138,21 @@ export default function Orders() {
 
   return (
     <Container>
-      <strong>Seus Raxas</strong>
+      <Header>
+        <span>
+          {profile ? `Bem vindo, ${profile.username}` : 'Bem vindo, ao Raxa'}
+        </span>
+        <Avatar width="100" url={profile.file && profile.file.url} />
+      </Header>
       <header>
-        <Search>
-          <MdSearch color="#999999" size={16} />
-          <input
-            value={filter}
-            onChange={e => setFilter(e.target.value)}
-            type="text"
-            placeholder="Filtrar Contas"
-          />
-        </Search>
+        <span>
+          SALDO:{' '}
+          {total >= 0 ? (
+            <div style={{color: pallete.primary}}><MdTrendingUp color={pallete.primary} /> R${numeral(total).format('0,0.00')}</div>
+          ) : (
+           <div style={{color: "#C44131"}}> <MdTrendingDown  /> R${numeral(total).format('0,0.00')}
+          </div>)}
+        </span>
         <button
           onClick={() => {
             setValues({ title: '', desription: '' });
@@ -160,40 +164,29 @@ export default function Orders() {
         </button>
       </header>
       <Body>
-        {orders &&
-          orders
-            .filter(
-              item =>
-                item.projects[0].title
-                  .toLowerCase()
-                  .indexOf(filter.toLowerCase()) > -1
-            )
-            .map(project => {
-              return (
-                <Card>
-                  <DivFlex>
-                    <div style={{ width: '40px' }}>
-                      <Avatar width="40" name={project.projects[0].title} />
-                    </div>
 
-                    <DivCol>
-                      <Title>{project.projects[0].title}</Title>
-                      <Description>
-                        {project.projects[0].description}
-                      </Description>
-                    </DivCol>
-                  </DivFlex>
+          <Title>Extrato</Title>
 
-                  <DivCol>
-                    <DivFlex>
-                      <MdPeople size={20} color={pallete.primary} />
-                      <span>{project.user.length}</span>
-                    </DivFlex>
+          <ToPay>
+            <span>Pedro: Comprei um extrato de tomate por R$ 29,50</span>
+          </ToPay>
+          <Paid>
+            <span>Eu: Comprei um extrato de tomate por R$ 29,50</span>
+          </Paid>
+          <Paid>
+            <span>Eu: Comprei um extrato de tomate por R$ 29,50</span>
+          </Paid>
+          <ToPay>
+            <span>Pedro: Comprei um extrato de tomate por R$ 29,50</span>
+          </ToPay>
+          <Paid>
+            <span>Eu: Comprei um extrato de tomate por R$ 29,50</span>
+          </Paid>
+          <Paid>
+            <span>Eu: Comprei um extrato de tomate por R$ 29,50</span>
+          </Paid>
 
-                    <Action
-                      viewDetail={() => {
-                        history.push(routes.task);
-                      }}
+        {/* <Action
                       edit={() => {
                         editOrder(project.projects[0]);
                       }}
@@ -217,10 +210,8 @@ export default function Orders() {
                         setOpen(true);
                       }}
                     />
-                  </DivCol>
-                </Card>
-              );
-            })}
+
+       */}
       </Body>
 
       <Dialog
@@ -230,41 +221,7 @@ export default function Orders() {
         aria-describedby="alert-dialog-description"
       >
         <PopUp>
-          {type === 'codeInvited' ? (
-            <>
-              <strong>
-                Bem Vindo, você foi convidado para raxar uma conta!
-              </strong>
-              <button
-                onClick={() => {
-                  enterMember();
-                  setOpen(false);
-                }}
-                type="submit"
-              >
-                Aceitar
-              </button>
-            </>
-          ) : type === 'invite' ? (
-            <>
-              <strong>Convidar para o Raxa</strong>
-              <a target="_blank" style={{ cursor: 'pointer' }} href={newLink}>
-                <FaWhatsapp color={pallete.primary} size={32} />
-                <span>Convidar por whatsapp</span>
-              </a>
-              <br />
-              <div
-                style={{ cursor: 'pointer' }}
-                onClick={() => {
-                  toast.success('Link copiado');
-                  copy(url);
-                }}
-              >
-                <MdContentCopy color={pallete.primary} size={32} />
-                <span>Copiar Link do convite</span>
-              </div>
-            </>
-          ) : (
+          (
             <>
               <strong>Criar novo Raxa</strong>
               <TextField

@@ -7,7 +7,7 @@ export default function AvatarInput() {
   const { defaultValue, registerField } = useField('avatar');
 
   const [file, setFile] = useState(defaultValue && defaultValue.id);
-  const [preview, setPreview] = useState(defaultValue && defaultValue.url);
+  const [preview, setPreview] = useState(defaultValue && defaultValue.file.url);
 
   const ref = useRef();
 
@@ -22,10 +22,15 @@ export default function AvatarInput() {
   }, [ref, registerField]);
 
   async function handleChange(e) {
+    const token = localStorage.getItem('token');
     const data = new FormData();
     data.append('file', e.target.files[0]);
 
-    const response = await api.post('files', data);
+    const response = await api.post('files', data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     const { id, url } = response.data;
     setFile(id);

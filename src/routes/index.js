@@ -18,6 +18,7 @@ import EditDeliveryman from '../pages/EditDeliveryman';
 import EditOrder from '../pages/EditOrder';
 import SignUpDeliveryman from '../pages/SignUpDeliveryman';
 import EditRecipient from '../pages/EditRecipient';
+import Task from '../pages/Task';
 
 export const routes = {
   signin: '/',
@@ -32,6 +33,7 @@ export const routes = {
   editRecipient: '/recipient/edit',
   recipient: '/recipient',
   problem: '/problem',
+  task: '/task',
   profile: '/perfil',
 };
 
@@ -60,6 +62,7 @@ export default function Routes() {
       <Route path={routes.editRecipient} component={EditRecipient} isPrivate />
       <Route path={routes.recipient} component={Recipient} isPrivate />
       <Route path={routes.problem} component={Problem} isPrivate />
+      <Route path={routes.task} component={Task} isPrivate />
       <Route path={routes.profile} component={Profile} isPrivate />
       <Route path={routes.signup} component={SignUp} />
       <Route path={routes.signin} component={SignIn} />
