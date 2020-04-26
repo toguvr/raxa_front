@@ -192,7 +192,9 @@ export default function Orders() {
 
                     <Action
                       viewDetail={() => {
-                        history.push(routes.task);
+                        history.push(
+                          `${routes.taskRedirect}/${project.projects[0].id}`
+                        );
                       }}
                       edit={() => {
                         editOrder(project.projects[0]);

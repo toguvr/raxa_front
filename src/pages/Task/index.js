@@ -54,6 +54,21 @@ export default function Task() {
   const [currentOrder, setCurrentOrder] = useState(false);
   const [values, setValues] = useState({ title: '', desription: '' });
   const [profile, setProfile] = useState(false);
+  const [members, setMembers] = useState(false);
+
+
+  async function getProjectMembers(id) {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await api.get(`/projectmembers/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setProfile(response.data[0]);
+    } catch (e) {}
+  }
 
   async function getProfile(data) {
     try {
@@ -67,9 +82,11 @@ export default function Task() {
       setProfile(response.data[0]);
     } catch (e) {}
   }
-
   useEffect(() => {
+    const id = history.location.pathname.replace('/task/', "")
+    console.log(id)
     getProfile();
+    getProjectMembers(id)
   }, []);
 
   const total = 0;

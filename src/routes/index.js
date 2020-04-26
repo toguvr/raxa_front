@@ -33,7 +33,8 @@ export const routes = {
   editRecipient: '/recipient/edit',
   recipient: '/recipient',
   problem: '/problem',
-  task: '/task',
+  taskRedirect: '/task',
+  task: '/task/:id',
   profile: '/perfil',
 };
 
