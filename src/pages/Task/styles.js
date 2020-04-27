@@ -5,7 +5,7 @@ import { pallete } from '~/styles';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 34px 22px 0;
+  padding: 0 22px 0;
 
   strong {
     font-size: 24px;
@@ -13,7 +13,7 @@ export const Container = styled.div`
   }
 
   header {
-    margin: 34px 0 22px;
+    margin: 10px 0 22px;
     margin: 15px 0;
     display: flex;
     align-items: center;
@@ -84,7 +84,6 @@ export const PopUp = styled.div`
   justify-content: flex-start;
   padding: 20px;
   width: 100%;
-  min-width: 300px;
 
   strong {
     margin-bottom: 20px;
@@ -173,23 +172,29 @@ export const Header = styled.div`
   }
 `;
 
-export const Title = styled.span`
+export const Title = styled.div`
   font-weight: bold;
-  color: black;
+  color: white;
+  background: ${pallete.secUp};
   font-size: 16px;
-  align-self: center;
-  margin: 5px;
+  text-align: center;
+  padding: 4px 0;
+  box-shadow: 0px 0px 10px #00000033;
+
+  border-radius: 25px 25px 0 0;
+
+  width: 100%;
 `;
 
 export const Body = styled.div`
   overflow-y: scroll;
   box-shadow: 0px 0px 10px #00000033;
-  border-radius: 25px 25px 0 0;
   width: 100%;
-  height: calc(100vh - 402px);
+  height: calc(100vh - 334px);
   background: white;
   display: flex;
   flex-direction: column;
+  padding: 5px;
 
   ::-webkit-scrollbar {
     display: none;

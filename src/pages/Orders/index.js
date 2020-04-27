@@ -41,7 +41,10 @@ export default function Orders() {
   const [orders, setOrders] = useState(false);
   const [open, setOpen] = useState(false);
   const [currentOrder, setCurrentOrder] = useState(false);
-  const [values, setValues] = useState({ title: '', desription: '' });
+  const [values, setValues] = useState({ title: '', description: '' });
+  const [projectsIds, setProjectsIds] = useState([]);
+  const [newMembers, setMembers] = useState([]);
+  const [totalMembers, setTotalMembers] = useState([]);
 
   const url = `${process.env.REACT_APP_URL}/orders?code=${currentOrder.id}`;
   const msg = `Entra ai pra facilitar o raxa da nossa conta "${currentOrder.title}" ${url}
@@ -49,6 +52,48 @@ export default function Orders() {
 
   const newLink = `https://api.whatsapp.com/send?text=${msg}`;
   const invitationCode = queryParams.get('code');
+
+  useEffect(() => {
+    getOrder();
+  }, []);
+
+  async function getProjectMembers(id) {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await api.get(`/projectmembers/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setTotalMembers(response.data);
+    } catch (e) {}
+  }
+
+  useEffect(() => {
+    const membersArr = [];
+    orders && orders.map(item => membersArr.push(item.project_id));
+
+    setProjectsIds(membersArr);
+  }, [orders]);
+
+  useEffect(() => {
+    const membersArr = [];
+
+    projectsIds &&
+      projectsIds.map(async item => {
+        const token = localStorage.getItem('token');
+        const response = await api.get(`/projectmembers/${item}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        return membersArr.push(response.data.length);
+      });
+
+    setMembers(membersArr);
+  }, [projectsIds]);
 
   async function enterMember() {
     try {
@@ -64,7 +109,6 @@ export default function Orders() {
     } catch (e) {
       toast.error('não foi possível entrar pro raxa');
       setLoading(false);
-      getOrder();
     }
   }
   useEffect(() => {
@@ -121,10 +165,12 @@ export default function Orders() {
   }
 
   useEffect(() => {
-    getOrder();
-  }, []);
+    if (type === 'members') {
+      getProjectMembers(currentOrder);
+    }
+  }, [type, currentOrder]);
 
-  function viewDialog(item) {
+  function viewMembers(item) {
     setCurrentOrder(item);
     setOpen(true);
   }
@@ -168,8 +214,7 @@ export default function Orders() {
                   .toLowerCase()
                   .indexOf(filter.toLowerCase()) > -1
             )
-            .map(project => {
-              console.log(project);
+            .map((project, index) => {
               return (
                 <Card>
                   <DivFlex>
@@ -177,7 +222,7 @@ export default function Orders() {
                       <Avatar
                         width="40"
                         name={
-                          project.projects[0].length > 0 &&
+                          project.projects.length > 0 &&
                           project.projects[0].title
                         }
                       />
@@ -192,9 +237,15 @@ export default function Orders() {
                   </DivFlex>
 
                   <DivCol>
-                    <DivFlex>
+                    <DivFlex
+                      onClick={() => {
+                        setType('members');
+                        setOpen(true);
+                        setCurrentOrder(project.projects[0].id);
+                      }}
+                    >
                       <MdPeople size={20} color={pallete.primary} />
-                      <span>{project.user.length}</span>
+                      {/* <span>{newMembers[index]}</span> */}
                     </DivFlex>
 
                     <Action
@@ -239,7 +290,18 @@ export default function Orders() {
         aria-describedby="alert-dialog-description"
       >
         <PopUp>
-          {type === 'codeInvited' ? (
+          {type === 'members' ? (
+            totalMembers &&
+            totalMembers.map(member => (
+              <DivFlex style={{ margin: '8px' }}>
+                <Avatar width="40" name={member.user[0].username} />
+
+                <span style={{ marginLeft: '8px' }}>
+                  {member.user[0].username}
+                </span>
+              </DivFlex>
+            ))
+          ) : type === 'codeInvited' ? (
             <>
               <strong>
                 Bem Vindo, você foi convidado para raxar uma conta!

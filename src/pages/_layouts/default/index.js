@@ -14,8 +14,7 @@ export default function DefaultLayout({ children }) {
   return (
     <Container>
       <header>
-        {console.log(history.location.pathname.indexOf(routes.task))}
-        {history.location.pathname.indexOf(routes.task) > 0 && (
+        {history.location.pathname.indexOf(routes.taskRedirect) !== -1 && (
           <MdKeyboardArrowLeft
             cursor="pointer"
             style={{ position: 'absolute', left: '10px' }}
@@ -27,9 +26,9 @@ export default function DefaultLayout({ children }) {
         <img src={logo} alt="GoBarber" />
       </header>
       <Body>{children}</Body>
-      {/* {history.location.pathname === routes.orders &&
-        history.location.pathname === routes.profile && <Header />} */}
-      <Header />
+      {history.location.pathname.indexOf(routes.taskRedirect) === -1 && (
+        <Header />
+      )}
     </Container>
   );
 }
