@@ -5,7 +5,7 @@ import { pallete } from '~/styles';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 34px 22px;
+  padding: 10px 22px 10px;
 
   strong {
     font-size: 24px;
@@ -136,7 +136,7 @@ export const Title = styled.span`
 export const Body = styled.div`
   overflow-y: scroll;
   width: 100%;
-  height: 40vh;
+  height: 35vh;
 
   ::-webkit-scrollbar {
     display: none;

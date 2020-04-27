@@ -136,11 +136,15 @@ export default function Task() {
     if (b.payer_id === profile.id) {
       return a + b.value * b.amount;
     }
+    return a;
   }, 0);
 
-  const subTotal = yourTotal - total / Number(members.length);
+  const subTotal = Number(yourTotal - total / Number(members.length));
 
   console.log(subTotal);
+  console.log('seu', yourTotal);
+  console.log('all', total);
+  console.log('pes', members.length);
 
   async function getOrder() {
     const response = await filterResult();
