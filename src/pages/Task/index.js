@@ -213,7 +213,7 @@ export default function Task() {
             <div style={{ color: '#C44131' }}>
               {' '}
               <MdTrendingDown /> R$
-              {numeral(yourTotal - total / 2).format('0,0.00')}
+              {numeral(yourTotal - total / members.length).format('0,0.00')}
             </div>
           )}
         </span>
