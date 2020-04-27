@@ -138,7 +138,9 @@ export default function Task() {
     }
   }, 0);
 
-  const subTotal = yourTotal - total / members.length;
+  const subTotal = yourTotal - total / Number(members.length);
+
+  console.log(subTotal);
 
   async function getOrder() {
     const response = await filterResult();

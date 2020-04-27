@@ -10,7 +10,9 @@ import store from './config/createStore';
 import { registerServiceWorker } from './serviceWorker';
 
 function App() {
-  registerServiceWorker();
+  if (process.env.NODE_ENV !== 'development') {
+    registerServiceWorker();
+  }
   return (
     <Provider store={store}>
       <Router history={history}>
