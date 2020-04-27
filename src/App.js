@@ -7,8 +7,10 @@ import history from './config/history';
 
 import GlobalStyle, { ToastContainerStyled } from './styles/global';
 import store from './config/createStore';
+import { registerServiceWorker } from './serviceWorker';
 
 function App() {
+  registerServiceWorker();
   return (
     <Provider store={store}>
       <Router history={history}>
