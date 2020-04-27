@@ -225,7 +225,7 @@ export default function Orders() {
             )
             .map((project, index) => {
               return (
-                <Card>
+                <Card key={project.projects[0].id}>
                   <DivFlex
                     style={{ width: 'calc(100% - 50px' }}
                     onClick={() => {
@@ -236,7 +236,7 @@ export default function Orders() {
                   >
                     <div style={{ width: '40px' }}>
                       <Avatar
-                        width="40"
+                        width={40}
                         name={
                           project.projects.length > 0 &&
                           project.projects[0].title
@@ -310,8 +310,8 @@ export default function Orders() {
           {type === 'members' ? (
             totalMembers &&
             totalMembers.map(member => (
-              <DivFlex style={{ margin: '8px' }}>
-                <Avatar width="40" name={member.user[0].username} />
+              <DivFlex key={member.id} style={{ margin: '8px' }}>
+                <Avatar width={40} name={member.user[0].username} />
 
                 <span style={{ marginLeft: '8px' }}>
                   {member.user[0].username}

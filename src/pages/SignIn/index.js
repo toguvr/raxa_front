@@ -34,6 +34,7 @@ export default function Signin() {
         history.push(routes.orders);
       } else {
         toast.error('Falha na autenticação, confira seu usuário e senha');
+        setLoading(false);
       }
     } catch (err) {
       setLoading(false);

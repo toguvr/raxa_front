@@ -7,6 +7,10 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
 
+  img {
+    width: 150px;
+  }
+
   header {
     height: 70px;
     width: 100%;

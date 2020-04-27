@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { MdKeyboardArrowLeft } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
-import logo from '~/assets/logo.png';
+import logo from 'assets/raxa.svg';
 
 import Header from '~/components/Header';
 

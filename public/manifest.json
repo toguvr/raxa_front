@@ -1,8 +1,8 @@
 {
   "name": "Raxa",
   "short_name": "Raxa",
-  "theme_color": "#fff",
-  "background_color": "#50c445",
+  "theme_color": "#40d085",
+  "background_color": "#40d085",
   "display": "standalone",
   "orientation": "portrait",
   "Scope": "/",

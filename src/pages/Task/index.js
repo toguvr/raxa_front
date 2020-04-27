@@ -23,7 +23,7 @@ import Table from '~/components/Table';
 import Avatar from '~/components/Avatar';
 import Status from '~/components/Status';
 import Action from '~/components/Action';
-import { removeValueMask } from '~utils/masks';
+import { removeValueMask } from '../../utils/masks';
 import {
   Container,
   Search,
@@ -105,7 +105,7 @@ export default function Task() {
     const id = history.location.pathname.replace('/task/', '');
 
     try {
-      values.value = removeValueMask(values.value);
+      values.value = Number(removeValueMask(values.value));
       const token = localStorage.getItem('token');
       const response = await api.post(`/projects/${id}/tasks`, values, {
         headers: {
@@ -168,16 +168,24 @@ export default function Task() {
   }
 
   async function editProject() {
+    const id = history.location.pathname.replace('/task/', '');
+
     setLoading(true);
     try {
-      const token = localStorage.getItem('token');
-      const response = await api.put(`/projects/${currentOrder}`, values, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      values.value = Number(removeValueMask(values.value));
 
-      getOrder();
+      const token = localStorage.getItem('token');
+      const response = await api.put(
+        `/projects/${id}/tasks/${currentOrder}`,
+        values,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      getTasks();
       toast.success('Conta atualizada');
       setLoading(false);
       setOpen(false);
@@ -195,11 +203,16 @@ export default function Task() {
     setOpen(true);
   }
 
-  function editOrder(item) {
+  function editTask(item) {
     setOpen(true);
     setType('edit');
     setCurrentOrder(item.id);
-    setValues({ description: item.description, title: item.title });
+    setValues({
+      description: item.description,
+      title: item.title,
+      amount: item.amount,
+      value: item.value,
+    });
   }
 
   return (
@@ -208,22 +221,27 @@ export default function Task() {
         <span>
           {profile ? `Bem vindo, ${profile.username}` : 'Bem vindo, ao Raxa'}
         </span>
-        <Avatar width="100" url={profile.file && profile.file.url} />
+        <Avatar width={100} url={profile.file && profile.file.url} />
       </Header>
       <header>
         <span>
-          SALDO:{' '}
           {subTotal >= 0 ? (
-            <div style={{ color: pallete.primary }}>
-              <MdTrendingUp color={pallete.primary} /> R$
-              {numeral(subTotal).format('0,0.00')}
-            </div>
+            <>
+              Recebe:{' '}
+              <div style={{ color: pallete.primary }}>
+                <MdTrendingUp color={pallete.primary} /> R$
+                {numeral(subTotal).format('0,0.00')}
+              </div>
+            </>
           ) : (
-            <div style={{ color: '#C44131' }}>
-              {' '}
-              <MdTrendingDown /> R$
-              {numeral(subTotal).format('0,0.00')}
-            </div>
+            <>
+              Paga:
+              <div style={{ color: '#C44131' }}>
+                {' '}
+                <MdTrendingDown /> R$
+                {numeral(subTotal).format('0,0.00')}
+              </div>
+            </>
           )}
         </span>
         <button
@@ -241,49 +259,70 @@ export default function Task() {
         {tasks &&
           tasks.map(task =>
             task.payer_id === profile.id ? (
-              <Paid>
+              <Paid key={task.id}>
                 <span>
                   Eu: Comprei {task.amount} {task.title} totalizando R$
                   {numeral(task.amount * task.value).format('0,0.00')}
                 </span>
+                <Action
+                  edit={() => {
+                    editTask(task);
+                  }}
+                  del={async () => {
+                    try {
+                      const confirm = window.confirm(
+                        'Deseja realmente deletar ?'
+                      );
+                      if (confirm) {
+                        const id = history.location.pathname.replace(
+                          '/task/',
+                          ''
+                        );
+
+                        await deleteOrder(id, task.id);
+                        await getTasks();
+                        toast.success('Deletado com sucesso');
+                      }
+                    } catch (err) {
+                      toast.error('Não foi possível deletar');
+                    }
+                  }}
+                />
               </Paid>
             ) : (
-              <ToPay>
+              <ToPay key={task.id}>
                 <span>
                   {task.payer.username}: Comprei {task.amount} {task.title}{' '}
                   totalizando R$
                   {numeral(task.amount * task.value).format('0,0.00')}
                 </span>
+                <Action
+                  edit={() => {
+                    editTask(task);
+                  }}
+                  del={async () => {
+                    try {
+                      const confirm = window.confirm(
+                        'Deseja realmente deletar ?'
+                      );
+                      if (confirm) {
+                        const id = history.location.pathname.replace(
+                          '/task/',
+                          ''
+                        );
+
+                        await deleteOrder(id, task.id);
+                        await getTasks();
+                        toast.success('Deletado com sucesso');
+                      }
+                    } catch (err) {
+                      toast.error('Não foi possível deletar');
+                    }
+                  }}
+                />
               </ToPay>
             )
           )}
-
-        {/* <Action
-                      edit={() => {
-                        editOrder(project.projects[0]);
-                      }}
-                      del={async () => {
-                        try {
-                          const confirm = window.confirm(
-                            'Deseja realmente deletar ?'
-                          );
-                          if (confirm) {
-                            await deleteOrder(project.projects[0].id);
-                            await getOrder();
-                            toast.success('Deletado com sucesso');
-                          }
-                        } catch (err) {
-                          toast.error('Não foi possível deletar');
-                        }
-                      }}
-                      view={() => {
-                        setType('invite');
-                        setCurrentOrder(project.projects[0]);
-                        setOpen(true);
-                      }}
-                    />
-
-       */}
       </Body>
 
       <Dialog

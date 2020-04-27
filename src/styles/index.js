@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const pallete = {
   terUp: '#3FD188',
   secUp: '#42DB63',
-  primary: '#50C445',
+  primary: '#40d085',
   secDown: '#84DB42',
   terDown: '#B1D13F',
 };

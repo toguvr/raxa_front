@@ -16,6 +16,7 @@ export const Container = styled.div`
 export const Img = styled.img`
   width: 259px;
   align-self: center;
+  margin-bottom: 50px;
 `;
 export const Route = styled.span`
   color: ${props => (props.currentPage ? '#fff' : '#cccccc')};

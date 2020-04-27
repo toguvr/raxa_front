@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
+import logo from 'assets/raxa.svg';
 import { Container, Content, Img, Header, Route } from './styles';
 import { routes } from '~/routes';
 
@@ -8,7 +9,7 @@ export default function AuthLayout({ children }) {
   const history = useHistory();
   return (
     <Container>
-      <Img src="" alt="" />
+      <Img src={logo} alt="" />
       <Header>
         <Route
           onClick={() => history.push(routes.signin)}
