@@ -84,6 +84,7 @@ export const PopUp = styled.div`
   justify-content: flex-start;
   padding: 20px;
   width: 100%;
+  min-width: 300px;
 
   strong {
     margin-bottom: 20px;
