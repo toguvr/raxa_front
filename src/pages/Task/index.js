@@ -18,10 +18,12 @@ import { Input } from '@rocketseat/unform';
 import { TextField, CircularProgress } from '@material-ui/core';
 import copy from 'clipboard-copy';
 import numeral from 'numeral';
+import NumberFormat from 'react-number-format';
 import Table from '~/components/Table';
 import Avatar from '~/components/Avatar';
 import Status from '~/components/Status';
 import Action from '~/components/Action';
+import { removeValueMask } from '~utils/masks';
 import {
   Container,
   Search,
@@ -42,9 +44,10 @@ import { holdOrder } from '~/store/order/reducer';
 import api from '~/services/api';
 
 import 'numeral/locales/pt-br';
-import NumberFormat from 'react-number-format';
 
 export default function Task() {
+  numeral.locale('pt-br');
+
   const history = useHistory();
 
   const [type, setType] = useState(false);
@@ -66,7 +69,7 @@ export default function Task() {
         },
       });
 
-      setMembers(response.data[0]);
+      setMembers(response.data);
     } catch (e) {}
   }
 
@@ -102,15 +105,19 @@ export default function Task() {
     const id = history.location.pathname.replace('/task/', '');
 
     try {
+      values.value = removeValueMask(values.value);
       const token = localStorage.getItem('token');
       const response = await api.post(`/projects/${id}/tasks`, values, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
-      setTasks(response.data[0]);
-    } catch (e) {}
+      toast.success('Gasto adicionado');
+      getTasks();
+      setOpen(false);
+    } catch (e) {
+      toast.error('Gasto não adicionado');
+    }
   }
 
   useEffect(() => {
@@ -130,6 +137,8 @@ export default function Task() {
       return a + b.value * b.amount;
     }
   }, 0);
+
+  const subTotal = yourTotal - total / members.length;
 
   async function getOrder() {
     const response = await filterResult();
@@ -176,10 +185,9 @@ export default function Task() {
       setLoading(false);
     }
   }
-
-  useEffect(() => {
-    getOrder();
-  }, []);
+  // useEffect(() => {
+  //   getOrder();
+  // }, []);
 
   function viewDialog(item) {
     setCurrentOrder(item);
@@ -204,16 +212,16 @@ export default function Task() {
       <header>
         <span>
           SALDO:{' '}
-          {total >= 0 ? (
+          {subTotal >= 0 ? (
             <div style={{ color: pallete.primary }}>
               <MdTrendingUp color={pallete.primary} /> R$
-              {numeral(total).format('0,0.00')}
+              {numeral(subTotal).format('0,0.00')}
             </div>
           ) : (
             <div style={{ color: '#C44131' }}>
               {' '}
               <MdTrendingDown /> R$
-              {numeral(yourTotal - total / members.length).format('0,0.00')}
+              {numeral(subTotal).format('0,0.00')}
             </div>
           )}
         </span>
@@ -321,7 +329,9 @@ export default function Task() {
               required
               name="value"
               value={values.value}
-              onValueChange={e => setValues({ ...values, value: e.value })}
+              onChange={e =>
+                setValues({ ...values, [e.target.name]: e.target.value })
+              }
               variant="outlined"
             />
             <br />

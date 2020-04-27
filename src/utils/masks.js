@@ -2,6 +2,10 @@ export const removeMask = value => {
   return value.replace(/[^\d]+/g, '');
 };
 
+export const removeValueMask = value => {
+  if (value) return value.replace(/[^0-9,]/g, '').replace(',', '.');
+};
+
 export function checaCPF(cpf) {
   if (
     cpf.length !== 11 ||
