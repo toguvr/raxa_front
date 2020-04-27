@@ -206,7 +206,16 @@ export default function Orders() {
         </button>
       </header>
       <Body>
-        {orders &&
+        {!orders ? (
+          <CircularProgress size={24} />
+        ) : orders.length === 0 ? (
+          <Card>
+            <DivCol>
+              <Title>Sem raxas</Title>
+              <Description>Adicione alguma conta clicando no "+"</Description>
+            </DivCol>
+          </Card>
+        ) : (
           orders
             .filter(
               item =>
@@ -256,11 +265,11 @@ export default function Orders() {
                     </DivFlex>
 
                     <Action
-                      viewDetail={() => {
-                        history.push(
-                          `${routes.taskRedirect}/${project.projects[0].id}`
-                        );
-                      }}
+                      // viewDetail={() => {
+                      //   history.push(
+                      //     `${routes.taskRedirect}/${project.projects[0].id}`
+                      //   );
+                      // }}
                       edit={() => {
                         editOrder(project.projects[0]);
                       }}
@@ -287,7 +296,8 @@ export default function Orders() {
                   </DivCol>
                 </Card>
               );
-            })}
+            })
+        )}
       </Body>
 
       <Dialog

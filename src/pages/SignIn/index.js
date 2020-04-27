@@ -27,9 +27,14 @@ export default function Signin() {
     setLoading(true);
     try {
       const response = await createSession(email, password);
-      toast.success('Autenticado com sucesso');
-      localStorage.setItem('token', response.data.token);
-      history.push(routes.orders);
+
+      if (response.status == 200) {
+        toast.success('Autenticado com sucesso');
+        localStorage.setItem('token', response.data.token);
+        history.push(routes.orders);
+      } else {
+        toast.error('Falha na autenticação, confira seu usuário e senha');
+      }
     } catch (err) {
       setLoading(false);
       toast.error('Falha na autenticação, confira seu usuário e senha');
