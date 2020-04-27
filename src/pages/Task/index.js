@@ -106,6 +106,8 @@ export default function Task() {
 
     try {
       values.value = Number(removeValueMask(values.value));
+      values.amount = Number(removeValueMask(values.amount));
+
       const token = localStorage.getItem('token');
       const response = await api.post(`/projects/${id}/tasks`, values, {
         headers: {
@@ -139,7 +141,7 @@ export default function Task() {
     return a;
   }, 0);
 
-  const subTotal = Number(yourTotal - total / Number(members.length));
+  const subTotal = Number(total) / Number(members.length) - Number(yourTotal);
 
   async function getOrder() {
     const response = await filterResult();
@@ -173,6 +175,7 @@ export default function Task() {
     setLoading(true);
     try {
       values.value = Number(removeValueMask(values.value));
+      values.amount = Number(removeValueMask(values.amount));
 
       const token = localStorage.getItem('token');
       const response = await api.put(
@@ -349,6 +352,7 @@ export default function Task() {
             <TextField
               id="outlined-basic"
               label="Quantidade"
+              type="number"
               required
               name="amount"
               value={values.amount}
