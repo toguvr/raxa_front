@@ -141,11 +141,6 @@ export default function Task() {
 
   const subTotal = Number(yourTotal - total / Number(members.length));
 
-  console.log(subTotal);
-  console.log('seu', yourTotal);
-  console.log('all', total);
-  console.log('pes', members.length);
-
   async function getOrder() {
     const response = await filterResult();
 

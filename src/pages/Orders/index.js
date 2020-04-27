@@ -217,7 +217,14 @@ export default function Orders() {
             .map((project, index) => {
               return (
                 <Card>
-                  <DivFlex>
+                  <DivFlex
+                    style={{ width: 'calc(100% - 50px' }}
+                    onClick={() => {
+                      history.push(
+                        `${routes.taskRedirect}/${project.projects[0].id}`
+                      );
+                    }}
+                  >
                     <div style={{ width: '40px' }}>
                       <Avatar
                         width="40"
@@ -236,7 +243,7 @@ export default function Orders() {
                     </DivCol>
                   </DivFlex>
 
-                  <DivCol>
+                  <DivCol style={{ width: '50px' }}>
                     <DivFlex
                       onClick={() => {
                         setType('members');
