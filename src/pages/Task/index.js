@@ -175,7 +175,7 @@ export default function Task() {
     setLoading(true);
     try {
       values.value = Number(removeValueMask(values.value));
-      values.amount = Number(removeValueMask(values.amount));
+      values.amount = Number(values.amount);
 
       const token = localStorage.getItem('token');
       const response = await api.put(
