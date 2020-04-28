@@ -264,7 +264,8 @@ export default function Task() {
             task.payer_id === profile.id ? (
               <Paid key={task.id}>
                 <span>
-                  Eu: Comprei {task.amount} {task.title} totalizando R$
+                  Eu: Comprei {task.amount} {task.title} por {task.value}{' '}
+                  totalizando R$
                   {numeral(task.amount * task.value).format('0,0.00')}
                 </span>
                 <Action
@@ -295,8 +296,8 @@ export default function Task() {
             ) : (
               <ToPay key={task.id}>
                 <span>
-                  {task.payer.username}: Comprei {task.amount} {task.title}{' '}
-                  totalizando R$
+                  {task.payer.username}: Comprei {task.amount} {task.title} por{' '}
+                  {task.value} totalizando R$
                   {numeral(task.amount * task.value).format('0,0.00')}
                 </span>
                 <Action
