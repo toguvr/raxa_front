@@ -368,7 +368,7 @@ export default function Task() {
               variant="outlined"
             />
             <br />
-            {console.log(values.value)}
+
             <NumberFormat
               customInput={TextField}
               decimalScale="2"
