@@ -2,10 +2,11 @@ import styled from 'styled-components';
 import { pallete } from '~/styles';
 
 export const Container = styled.div`
-  min-height: 100%;
+  min-height: 100vh;
   background: linear-gradient(#50c445, #3fd188);
   display: flex;
   flex-direction: column;
+  max-width: 700px;
 
   img {
     width: 150px;
@@ -22,4 +23,13 @@ export const Container = styled.div`
 
 export const Body = styled.div`
   flex: 1;
+`;
+
+export const Pc = styled.div`
+  background: lightgray;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
 `;
