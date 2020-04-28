@@ -6,7 +6,10 @@ export const Container = styled.div`
   background: linear-gradient(#50c445, #3fd188);
   display: flex;
   flex-direction: column;
-  max-width: 700px;
+
+  @media screen and (min-width: 900px) {
+    max-width: 700px;
+  }
 
   img {
     width: 150px;
@@ -26,10 +29,12 @@ export const Body = styled.div`
 `;
 
 export const Pc = styled.div`
-  background: lightgray;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100%;
+  @media screen and (min-width: 900px) {
+    background: lightgray;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
+  }
 `;

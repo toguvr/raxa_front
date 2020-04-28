@@ -136,7 +136,7 @@ export const Title = styled.span`
 export const Body = styled.div`
   overflow-y: scroll;
   width: 100%;
-  height: calc(100vh - 330px);
+  height: calc(100vh - 370px);
 
   ::-webkit-scrollbar {
     display: none;
