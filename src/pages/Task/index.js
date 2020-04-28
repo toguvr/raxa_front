@@ -304,30 +304,6 @@ export default function Task() {
                   {task.value} totalizando R$
                   {numeral(task.amount * task.value).format('0,0.00')}
                 </span>
-                <Action
-                  edit={() => {
-                    editTask(task);
-                  }}
-                  del={async () => {
-                    try {
-                      const confirm = window.confirm(
-                        'Deseja realmente deletar ?'
-                      );
-                      if (confirm) {
-                        const id = history.location.pathname.replace(
-                          '/task/',
-                          ''
-                        );
-
-                        await deleteOrder(id, task.id);
-                        await getTasks();
-                        toast.success('Deletado com sucesso');
-                      }
-                    } catch (err) {
-                      toast.error('Não foi possível deletar');
-                    }
-                  }}
-                />
               </ToPay>
             )
           )}
