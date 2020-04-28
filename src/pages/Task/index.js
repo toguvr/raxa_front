@@ -224,7 +224,11 @@ export default function Task() {
         <span>
           {profile ? `Bem vindo, ${profile.username}` : 'Bem vindo, ao Raxa'}
         </span>
-        <Avatar width={100} url={profile.file && profile.file.url} />
+        {profile.file ? (
+          <Avatar width={100} url={profile.file.url} />
+        ) : (
+          <Avatar width={100} name={profile.username} />
+        )}
       </Header>
       <header>
         <span>
