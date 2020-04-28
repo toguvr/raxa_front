@@ -23,7 +23,7 @@ import Table from '~/components/Table';
 import Avatar from '~/components/Avatar';
 import Status from '~/components/Status';
 import Action from '~/components/Action';
-import { removeValueMask } from '../../utils/masks';
+import { removeValueMask, changeValueMask } from '../../utils/masks';
 import {
   Container,
   Search,
@@ -214,7 +214,7 @@ export default function Task() {
       description: item.description,
       title: item.title,
       amount: item.amount,
-      value: item.value,
+      value: changeValueMask(item.value),
     });
   }
 
@@ -354,6 +354,7 @@ export default function Task() {
               label="Quantidade"
               type="number"
               required
+              step="any"
               name="amount"
               value={values.amount}
               onChange={e =>
@@ -362,6 +363,7 @@ export default function Task() {
               variant="outlined"
             />
             <br />
+            {console.log(values.value)}
             <NumberFormat
               customInput={TextField}
               decimalScale="2"
@@ -373,6 +375,7 @@ export default function Task() {
               required
               name="value"
               value={values.value}
+              defaultValue={type === 'edit' && values.value}
               onChange={e =>
                 setValues({ ...values, [e.target.name]: e.target.value })
               }
