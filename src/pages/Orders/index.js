@@ -227,7 +227,7 @@ export default function Orders() {
               return (
                 <Card key={project.projects[0].id}>
                   <DivFlex
-                    style={{ width: 'calc(100% - 50px' }}
+                    style={{ width: 'calc(100% - 50px', cursor: 'pointer' }}
                     onClick={() => {
                       history.push(
                         `${routes.taskRedirect}/${project.projects[0].id}`

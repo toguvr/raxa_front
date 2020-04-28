@@ -22,6 +22,7 @@ export const Route = styled.span`
   color: ${props => (props.currentPage ? '#fff' : '#cccccc')};
   font-size: 24px;
   font-weight: bold;
+  cursor: pointer;
 `;
 
 export const Header = styled.div`
