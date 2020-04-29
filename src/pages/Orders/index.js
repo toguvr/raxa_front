@@ -128,7 +128,7 @@ export default function Orders() {
     setLoading(true);
 
     try {
-      values.set_date = format(new Date(), 'yyyy-MM-dd HH:mm:ss.SSSxxx');
+      values.set_date = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
       const token = localStorage.getItem('token');
       const response = await api.post('/projects', values, {
         headers: {

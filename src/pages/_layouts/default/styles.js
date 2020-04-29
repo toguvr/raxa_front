@@ -6,6 +6,7 @@ export const Container = styled.div`
   background: linear-gradient(#50c445, #3fd188);
   display: flex;
   flex-direction: column;
+  position: relative;
 
   @media screen and (min-width: 900px) {
     max-width: 700px;
