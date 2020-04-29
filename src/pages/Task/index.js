@@ -294,9 +294,15 @@ export default function Task() {
             </>
           )}
         </span>
-        <button style={{ width: '70px' }} onClick={editTotal}>
-          Quitado
-        </button>
+        {subTotal !== 0 ? (
+          <button style={{ width: '70px' }} onClick={editTotal}>
+            Quitar
+          </button>
+        ) : (
+          <button disabled style={{ width: '70px', background: 'lightgray' }}>
+            Quitado
+          </button>
+        )}
         <button
           onClick={() => {
             setValues({ title: '', desription: '' });
