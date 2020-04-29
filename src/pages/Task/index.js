@@ -9,7 +9,7 @@ import {
 } from 'react-icons/md';
 import { FaWhatsapp } from 'react-icons/fa';
 import Dialog from '@material-ui/core/Dialog';
-import { format, parseISO } from 'date-fns';
+import { format, parseISO, parse } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import { useHistory, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -44,6 +44,7 @@ import { holdOrder } from '~/store/order/reducer';
 import api from '~/services/api';
 
 import 'numeral/locales/pt-br';
+import { toDate } from 'date-fns-tz/esm';
 
 export default function Task() {
   numeral.locale('pt-br');
@@ -131,14 +132,18 @@ export default function Task() {
   }, []);
 
   const total = tasks.reduce(function(a, b) {
-    return a + b.value * b.amount;
+    if (tasks[0].project.set_date > b.created_at) {
+      return a + b.value * b.amount;
+    }
   }, 0);
 
   const yourTotal = tasks.reduce(function(a, b) {
-    if (b.payer_id === profile.id) {
-      return a + b.value * b.amount;
+    if (tasks[0].project.set_date > b.created_at) {
+      if (b.payer_id === profile.id) {
+        return a + b.value * b.amount;
+      }
+      return a;
     }
-    return a;
   }, 0);
 
   const subTotal = Number(yourTotal) - Number(total) / Number(members.length);
@@ -166,6 +171,36 @@ export default function Task() {
     } catch (e) {
       toast.error('não foi possível criar a conta');
       setLoading(false);
+    }
+  }
+
+  async function editTotal() {
+    const id = history.location.pathname.replace('/task/', '');
+    const body = {
+      totalValue: total,
+      set_date: format(new Date(), 'yyyy-MM-dd HH:mm:ss.SSSxxx'),
+    };
+    const confirm = window.confirm(
+      'Se quitar as dívidas irão zerar e não terá como desfazer.'
+    );
+    if (confirm) {
+      setLoading(true);
+      try {
+        const token = localStorage.getItem('token');
+        const response = await api.put(`/projects/${id}`, body, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        getTasks();
+        toast.success('Conta atualizada');
+        setLoading(false);
+        setOpen(false);
+      } catch (e) {
+        toast.error('não foi possível atualizar a conta');
+        setLoading(false);
+      }
     }
   }
 
@@ -251,6 +286,9 @@ export default function Task() {
             </>
           )}
         </span>
+        <button style={{ width: '70px' }} onClick={editTotal}>
+          Quitado
+        </button>
         <button
           onClick={() => {
             setValues({ title: '', desription: '' });
