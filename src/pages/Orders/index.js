@@ -359,7 +359,6 @@ export default function Orders() {
             <>
               <strong>Criar novo Raxa</strong>
               <TextField
-                id="outlined-basic"
                 required
                 label="Titulo"
                 name="title"
@@ -373,7 +372,6 @@ export default function Orders() {
               <TextField
                 multiline
                 rows="3"
-                id="outlined-basic"
                 label="Descrição"
                 required
                 name="description"

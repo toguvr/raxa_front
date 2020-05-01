@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   MdSearch,
   MdAdd,
@@ -153,12 +153,19 @@ export default function Task() {
       if (b.payer_id === profile.id) {
         return a + b.value * b.amount;
       }
+
       return a;
     }
-    return a;
   }, 0);
 
-  const subTotal = Number(yourTotal) - Number(total) / Number(members.length);
+  const subTotal = useMemo(() => {
+    if (members) {
+      return Number(yourTotal) - Number(total) / Number(members.length);
+    }
+    return 0;
+  }, [yourTotal, total, members]);
+
+  console.log(subTotal);
 
   async function getOrder() {
     const response = await filterResult();
@@ -407,7 +414,6 @@ export default function Task() {
               decimalSeparator=","
               prefix="R$ "
               thousandSeparator="."
-              id="outlined-basic"
               label="Valor"
               required
               name="value"
@@ -422,7 +428,6 @@ export default function Task() {
             <TextField
               multiline
               rows="3"
-              id="outlined-basic"
               label="Descrição"
               name="description"
               value={values.description}
