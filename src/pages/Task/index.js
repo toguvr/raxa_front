@@ -132,34 +132,38 @@ export default function Task() {
   }, []);
 
   const total = useMemo(() => {
-    return tasks.reduce(function(a, b) {
-      if (
-        format(
-          addHours(new Date(tasks[0].project.set_date), 3),
-          'yyyy-MM-dd HH:mm:ss'
-        ) < format(subHours(new Date(b.created_at), 3), 'yyyy-MM-dd HH:mm:ss')
-      ) {
-        return a + Number(b.value) * Number(b.amount);
-      }
-      return a;
-    }, 0);
+    if (tasks) {
+      return tasks.reduce(function(a, b) {
+        if (
+          format(
+            addHours(new Date(tasks[0].project.set_date), 3),
+            'yyyy-MM-dd HH:mm:ss'
+          ) < format(subHours(new Date(b.created_at), 3), 'yyyy-MM-dd HH:mm:ss')
+        ) {
+          return a + Number(b.value) * Number(b.amount);
+        }
+        return a;
+      }, 0);
+    }
   }, [tasks]);
 
   const yourTotal = useMemo(() => {
-    return tasks.reduce(function(a, b) {
-      if (
-        format(
-          addHours(new Date(tasks[0].project.set_date), 3),
-          'yyyy-MM-dd HH:mm:ss'
-        ) < format(subHours(new Date(b.created_at), 3), 'yyyy-MM-dd HH:mm:ss')
-      ) {
-        if (b.payer_id === profile.id) {
-          return a + Number(b.value) * Number(b.amount);
-        }
+    if (tasks) {
+      return tasks.reduce(function(a, b) {
+        if (
+          format(
+            addHours(new Date(tasks[0].project.set_date), 3),
+            'yyyy-MM-dd HH:mm:ss'
+          ) < format(subHours(new Date(b.created_at), 3), 'yyyy-MM-dd HH:mm:ss')
+        ) {
+          if (b.payer_id === profile.id) {
+            return a + Number(b.value) * Number(b.amount);
+          }
 
-        return a;
-      }
-    }, 0);
+          return a;
+        }
+      }, 0);
+    }
   }, [tasks]);
 
   const subTotal = useMemo(() => {
@@ -294,7 +298,7 @@ export default function Task() {
           <Avatar width={100} name="RAXA" />
         )}
       </Header>
-      {/* <header>
+      <header>
         <span>
           {subTotal >= 0 ? (
             <>
@@ -333,7 +337,7 @@ export default function Task() {
         >
           <MdAdd color="#fff" size={16} />
         </button>
-      </header> */}
+      </header>
       <Title>Extrato</Title>
       <Body>
         {tasks &&
