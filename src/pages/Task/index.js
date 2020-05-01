@@ -133,42 +133,42 @@ export default function Task() {
 
   const total = useMemo(() => {
     if (tasks.length > 0) {
-      if(tasks[0].project.set_date){
-      return tasks.reduce(function(a, b) {
-        if (
-          format(
-            addHours(new Date(tasks[0].project.set_date), 3),
-            'yyyy-MM-dd HH:mm:ss'
-          ) < format(subHours(new Date(b.created_at), 3), 'yyyy-MM-dd HH:mm:ss')
-        ) {
-          return a + Number(b.value) * Number(b.amount);
-        }
-        return a;
-      }, 0);
-    }}
+      if (tasks[0].project.set_date) {
+        return tasks.reduce(function(a, b) {
+          if (
+
+              addHours(new Date(tasks[0].project.set_date), 3),
+               <
+           new Date(b.created_at)
+          ) {
+            return a + Number(b.value) * Number(b.amount);
+          }
+          return a;
+        }, 0);
+      }
+    }
   }, [tasks]);
 
   const yourTotal = useMemo(() => {
     if (tasks.length > 0) {
-      if(tasks[0].project.set_date){
-      return tasks.reduce(function(a, b) {
-        console.log( format(
-          addHours(new Date(tasks[0].project.set_date), 3),
-          'yyyy-MM-dd HH:mm:ss'
-        ) < format(subHours(new Date(b.created_at), 3), 'yyyy-MM-dd HH:mm:ss'))
-        if (
-          format(
-            addHours(new Date(tasks[0].project.set_date), 3),
-            'yyyy-MM-dd HH:mm:ss'
-          ) < format(subHours(new Date(b.created_at), 3), 'yyyy-MM-dd HH:mm:ss')
-        ) {
-          if (b.payer_id === profile.id) {
-            return a + Number(b.value) * Number(b.amount);
-          }
+      if (tasks[0].project.set_date) {
+        return tasks.reduce(function(a, b) {
 
+          if (
+
+              addHours(new Date(tasks[0].project.set_date), 3),
+               <
+            new Date(b.created_at)
+          ) {
+            if (b.payer_id === profile.id) {
+              return a + Number(b.value) * Number(b.amount);
+            }
+
+            return a;
+          }
           return a;
         }, 0);
-      }}
+      }
     }
   }, [tasks]);
 
@@ -178,10 +178,6 @@ export default function Task() {
     }
     return 0;
   }, [yourTotal, total, members]);
-
-  console.log(total);
-  console.log(yourTotal);
-  console.log(subTotal);
 
   async function getOrder() {
     const response = await filterResult();
