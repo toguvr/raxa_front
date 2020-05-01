@@ -204,7 +204,7 @@ export default function Orders() {
             setOpen(true);
           }}
         >
-          <MdAdd color="#fff" size={16} />
+          <MdAdd color="#fff" size={20} />
         </button>
       </header>
       <Body>

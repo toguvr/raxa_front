@@ -327,7 +327,7 @@ export default function Task() {
             setOpen(true);
           }}
         >
-          <MdAdd color="#fff" size={16} />
+          <MdAdd color="#fff" size={20} />
         </button>
       </header>
       <Title>Extrato</Title>
