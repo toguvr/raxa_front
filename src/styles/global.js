@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -38,7 +38,7 @@ export const CssStyle = styled.div`
     outline: 0;
   }
 
-  html,
+  /* html,
   body,
   #root {
     height: 100%;
@@ -46,7 +46,7 @@ export const CssStyle = styled.div`
 
   body {
     -webkit-font-smoothing: antialiased;
-  }
+  } */
 
   body,
   input,
