@@ -108,6 +108,7 @@ export default function Task() {
     try {
       values.value = Number(removeValueMask(values.value));
       values.amount = Number(removeValueMask(values.amount));
+      values.set_date = format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
 
       const token = localStorage.getItem('token');
       const response = await api.post(`/projects/${id}/tasks`, values, {
@@ -135,10 +136,7 @@ export default function Task() {
     if (tasks.length > 0) {
       if (tasks[0].project.set_date) {
         return tasks.reduce(function(a, b) {
-          if (
-            addHours(new Date(tasks[0].project.set_date), 3) <
-            new Date(b.created_at)
-          ) {
+          if (new Date(tasks[0].project.set_date) < new Date(b.set_date)) {
             return a + Number(b.value) * Number(b.amount);
           }
           return a;
@@ -151,10 +149,7 @@ export default function Task() {
     if (tasks.length > 0) {
       if (tasks[0].project.set_date) {
         return tasks.reduce(function(a, b) {
-          if (
-            addHours(new Date(tasks[0].project.set_date), 3) <
-            new Date(b.created_at)
-          ) {
+          if (new Date(tasks[0].project.set_date) < new Date(b.set_date)) {
             if (b.payer_id === profile.id) {
               return a + Number(b.value) * Number(b.amount);
             }
