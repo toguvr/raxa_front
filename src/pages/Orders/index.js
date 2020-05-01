@@ -26,7 +26,7 @@ import {
 import { DivFlex, pallete, DivCol } from '~/styles';
 import { filterResult } from '~/services/filter';
 import { routes } from '~/routes';
-import { deleteOrder } from '~/services/order';
+import { deleteOrder, deleteOnlyOrder } from '~/services/order';
 import { holdOrder } from '~/store/order/reducer';
 import api from '~/services/api';
 
@@ -116,7 +116,7 @@ export default function Orders() {
       setType('codeInvited');
       setOpen(true);
     }
-  }, []);
+  }, [invitationCode]);
 
   async function getOrder() {
     const response = await filterResult();
@@ -281,7 +281,8 @@ export default function Orders() {
                             'Deseja realmente deletar ?'
                           );
                           if (confirm) {
-                            await deleteOrder(project.projects[0].id);
+                            console.log(project.projects[0].id);
+                            await deleteOnlyOrder(project.projects[0].id);
                             await getOrder();
                             toast.success('Deletado com sucesso');
                           }

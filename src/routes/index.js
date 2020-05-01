@@ -14,6 +14,8 @@ import Profile from '../pages/Profile';
 
 import Task from '../pages/Task';
 
+import { PrivateRoute } from '~/utils/privateRoute';
+
 export const routes = {
   signin: '/',
   signup: '/cadastrar',

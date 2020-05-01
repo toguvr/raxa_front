@@ -51,3 +51,15 @@ export async function deleteOrder(projectId, taskId) {
 
   return response;
 }
+
+export async function deleteOnlyOrder(projectId) {
+  const token = localStorage.getItem('token');
+
+  const response = await axios.delete(`${baseURL}/projects/${projectId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response;
+}

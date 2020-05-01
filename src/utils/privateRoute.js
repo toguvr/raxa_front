@@ -22,6 +22,15 @@ export const Authenticator = connect(
     // } else if (!props.actualProfile.hasAddress && props.actualPage !== routes.address) {
     // return (<Redirect to={ routes.address } />)
   }
+  if (token) {
+    return (
+      <Redirect
+        to={{ pathname: routes.orders, state: { from: props.location } }}
+      />
+    );
+    // } else if (!props.actualProfile.hasAddress && props.actualPage !== routes.address) {
+    // return (<Redirect to={ routes.address } />)
+  }
   return props.children;
 });
 
