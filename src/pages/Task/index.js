@@ -9,7 +9,7 @@ import {
 } from 'react-icons/md';
 import { FaWhatsapp } from 'react-icons/fa';
 import Dialog from '@material-ui/core/Dialog';
-import { format, parseISO, parse } from 'date-fns';
+import { format, parseISO, parse, subHours, addHours } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import { useHistory, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -133,8 +133,10 @@ export default function Task() {
 
   const total = tasks.reduce(function(a, b) {
     if (
-      format(new Date(tasks[0].project.set_date), 'yyyy-MM-dd HH:mm:ss') <
-      b.created_at
+      format(
+        addHours(new Date(tasks[0].project.set_date), 3),
+        'yyyy-MM-dd HH:mm:ss'
+      ) < format(subHours(new Date(b.created_at), 3), 'yyyy-MM-dd HH:mm:ss')
     ) {
       return a + b.value * b.amount;
     }
@@ -143,8 +145,10 @@ export default function Task() {
 
   const yourTotal = tasks.reduce(function(a, b) {
     if (
-      format(new Date(tasks[0].project.set_date), 'yyyy-MM-dd HH:mm:ss') <
-      b.created_at
+      format(
+        addHours(new Date(tasks[0].project.set_date), 3),
+        'yyyy-MM-dd HH:mm:ss'
+      ) < format(subHours(new Date(b.created_at), 3), 'yyyy-MM-dd HH:mm:ss')
     ) {
       if (b.payer_id === profile.id) {
         return a + b.value * b.amount;

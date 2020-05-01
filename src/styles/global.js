@@ -24,21 +24,23 @@ export const ToastContainerStyled = styled(ToastContainer)`
   }
 `;
 
-export default createGlobalStyle`
+export const CssStyle = styled.div`
   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-  *{
+  /* * {
     margin: 0;
     padding: 0;
     outline: 0;
     box-sizing: border-box;
+  } */
+
+  *:focus {
+    outline: 0;
   }
 
-  *:focus{
-    outline:0;
-  }
-
-  html,body, #root {
+  html,
+  body,
+  #root {
     height: 100%;
   }
 
@@ -46,20 +48,21 @@ export default createGlobalStyle`
     -webkit-font-smoothing: antialiased;
   }
 
-  body, input, button {
+  body,
+  input,
+  button {
     font: 14px 'Roboto', sans-serif;
   }
 
-a {
-  text-decoration: none;
-}
+  a {
+    text-decoration: none;
+  }
 
-ul {
-  list-style: none;
-}
+  ul {
+    list-style: none;
+  }
 
-button {
-  cursor: pointer;
-}
-
+  button {
+    cursor: pointer;
+  }
 `;

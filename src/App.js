@@ -5,7 +5,7 @@ import './config/ReactotronConfig';
 import Routes from './routes';
 import history from './config/history';
 
-import GlobalStyle, { ToastContainerStyled } from './styles/global';
+import { ToastContainerStyled, CssStyle } from './styles/global';
 import store from './config/createStore';
 // import { registerServiceWorker } from './serviceWorker';
 
@@ -13,8 +13,9 @@ function App() {
   return (
     <Provider store={store}>
       <Router history={history}>
-        <Routes />
-        <GlobalStyle />
+        <CssStyle>
+          <Routes />
+        </CssStyle>
         <ToastContainerStyled autoClose={5000} />
       </Router>
     </Provider>
