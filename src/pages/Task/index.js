@@ -132,7 +132,7 @@ export default function Task() {
   }, []);
 
   const total = useMemo(() => {
-    if (tasks) {
+    if (tasks.length > 0) {
       return tasks.reduce(function(a, b) {
         if (
           format(
@@ -148,7 +148,7 @@ export default function Task() {
   }, [tasks]);
 
   const yourTotal = useMemo(() => {
-    if (tasks) {
+    if (tasks.length > 0) {
       return tasks.reduce(function(a, b) {
         if (
           format(
