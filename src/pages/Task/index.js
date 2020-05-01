@@ -280,7 +280,7 @@ export default function Task() {
 
   return (
     <Container>
-      {/* <Header>
+      <Header>
         <span>
           {profile ? `Bem vindo, ${profile.username}` : 'Bem vindo, ao Raxa'}
         </span>
@@ -293,7 +293,7 @@ export default function Task() {
         ) : (
           <Avatar width={100} name="RAXA" />
         )}
-      </Header> */}
+      </Header>
       <header>
         <span>
           {subTotal >= 0 ? (
@@ -335,7 +335,7 @@ export default function Task() {
         </button>
       </header>
       <Title>Extrato</Title>
-      <Body>
+      {/* <Body>
         {tasks &&
           tasks.map(task =>
             task.payer_id === profile.id ? (
@@ -380,7 +380,7 @@ export default function Task() {
               </ToPay>
             )
           )}
-      </Body>
+      </Body> */}
 
       <Dialog
         open={open}
