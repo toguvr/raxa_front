@@ -136,10 +136,8 @@ export default function Task() {
       if (tasks[0].project.set_date) {
         return tasks.reduce(function(a, b) {
           if (
-
-              addHours(new Date(tasks[0].project.set_date), 3),
-               <
-           new Date(b.created_at)
+            addHours(new Date(tasks[0].project.set_date), 3) <
+            new Date(b.created_at)
           ) {
             return a + Number(b.value) * Number(b.amount);
           }
@@ -153,11 +151,8 @@ export default function Task() {
     if (tasks.length > 0) {
       if (tasks[0].project.set_date) {
         return tasks.reduce(function(a, b) {
-
           if (
-
-              addHours(new Date(tasks[0].project.set_date), 3),
-               <
+            addHours(new Date(tasks[0].project.set_date), 3) <
             new Date(b.created_at)
           ) {
             if (b.payer_id === profile.id) {
