@@ -149,11 +149,6 @@ export default function Task() {
     if (tasks.length > 0) {
       if (tasks[0].project.set_date) {
         return tasks.reduce(function(a, b) {
-          console.log('tarefan', new Date(b.set_date));
-          console.log('projeto', new Date(tasks[0].project.set_date));
-          console.log(
-            new Date(tasks[0].project.set_date) < new Date(b.set_date)
-          );
           if (new Date(tasks[0].project.set_date) < new Date(b.set_date)) {
             if (b.payer_id === profile.id) {
               return a + Number(b.value) * Number(b.amount);

@@ -281,7 +281,6 @@ export default function Orders() {
                             'Deseja realmente deletar ?'
                           );
                           if (confirm) {
-                            console.log(project.projects[0].id);
                             await deleteOnlyOrder(project.projects[0].id);
                             await getOrder();
                             toast.success('Deletado com sucesso');
