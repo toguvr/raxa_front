@@ -12,11 +12,11 @@ export default function RouteWrapper({
 }) {
   const signed = localStorage.getItem('token');
 
-  if (!signed) {
+  if (!signed && isPrivate) {
     return <Redirect to={routes.signin} />;
   }
 
-  if (signed) {
+  if (signed && !isPrivate) {
     return <Redirect to={routes.orders} />;
   }
 

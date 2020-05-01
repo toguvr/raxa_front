@@ -17,16 +17,9 @@ import Task from '../pages/Task';
 export const routes = {
   signin: '/',
   signup: '/cadastrar',
-  signupOrders: '/orders/signup',
-  editOrders: '/orders/edit',
+
   orders: '/orders',
-  signupDeliveryman: '/deliveryman/signup',
-  deliveryman: '/deliveryman',
-  editDeliveryman: '/deliveryman/edit',
-  signupRecipient: '/recipient/signup',
-  editRecipient: '/recipient/edit',
-  recipient: '/recipient',
-  problem: '/problem',
+
   taskRedirect: '/task',
   task: '/task/:id',
   profile: '/perfil',
