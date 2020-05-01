@@ -133,6 +133,7 @@ export default function Task() {
 
   const total = useMemo(() => {
     if (tasks.length > 0) {
+      if(tasks[0].project.set_date){
       return tasks.reduce(function(a, b) {
         if (
           format(
@@ -144,11 +145,12 @@ export default function Task() {
         }
         return a;
       }, 0);
-    }
+    }}
   }, [tasks]);
 
   const yourTotal = useMemo(() => {
     if (tasks.length > 0) {
+      if(tasks[0].project.set_date){
       return tasks.reduce(function(a, b) {
         if (
           format(
@@ -161,7 +163,7 @@ export default function Task() {
           }
 
           return a;
-        }
+        }}
       }, 0);
     }
   }, [tasks]);
