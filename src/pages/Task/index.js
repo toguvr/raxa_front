@@ -280,16 +280,20 @@ export default function Task() {
 
   return (
     <Container>
-      <Header>
+      {/* <Header>
         <span>
           {profile ? `Bem vindo, ${profile.username}` : 'Bem vindo, ao Raxa'}
         </span>
-        {profile.file ? (
-          <Avatar width={100} url={profile.file.url} />
+        {profile ? (
+          profile.file ? (
+            <Avatar width={100} url={profile.file.url} />
+          ) : (
+            <Avatar width={100} name={profile.username} />
+          )
         ) : (
-          <Avatar width={100} name={profile.username} />
+          <Avatar width={100} name="RAXA" />
         )}
-      </Header>
+      </Header> */}
       <header>
         <span>
           {subTotal >= 0 ? (
