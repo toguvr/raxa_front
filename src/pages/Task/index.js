@@ -131,32 +131,36 @@ export default function Task() {
     getTasks();
   }, []);
 
-  const total = tasks.reduce(function(a, b) {
-    if (
-      format(
-        addHours(new Date(tasks[0].project.set_date), 3),
-        'yyyy-MM-dd HH:mm:ss'
-      ) < format(subHours(new Date(b.created_at), 3), 'yyyy-MM-dd HH:mm:ss')
-    ) {
-      return a + b.value * b.amount;
-    }
-    return a;
-  }, 0);
-
-  const yourTotal = tasks.reduce(function(a, b) {
-    if (
-      format(
-        addHours(new Date(tasks[0].project.set_date), 3),
-        'yyyy-MM-dd HH:mm:ss'
-      ) < format(subHours(new Date(b.created_at), 3), 'yyyy-MM-dd HH:mm:ss')
-    ) {
-      if (b.payer_id === profile.id) {
-        return a + b.value * b.amount;
+  const total = useMemo(() => {
+    return tasks.reduce(function(a, b) {
+      if (
+        format(
+          addHours(new Date(tasks[0].project.set_date), 3),
+          'yyyy-MM-dd HH:mm:ss'
+        ) < format(subHours(new Date(b.created_at), 3), 'yyyy-MM-dd HH:mm:ss')
+      ) {
+        return a + Number(b.value) * Number(b.amount);
       }
-
       return a;
-    }
-  }, 0);
+    }, 0);
+  }, [tasks]);
+
+  const yourTotal = useMemo(() => {
+    return tasks.reduce(function(a, b) {
+      if (
+        format(
+          addHours(new Date(tasks[0].project.set_date), 3),
+          'yyyy-MM-dd HH:mm:ss'
+        ) < format(subHours(new Date(b.created_at), 3), 'yyyy-MM-dd HH:mm:ss')
+      ) {
+        if (b.payer_id === profile.id) {
+          return a + Number(b.value) * Number(b.amount);
+        }
+
+        return a;
+      }
+    }, 0);
+  }, [tasks]);
 
   const subTotal = useMemo(() => {
     if (members) {
@@ -165,6 +169,8 @@ export default function Task() {
     return 0;
   }, [yourTotal, total, members]);
 
+  console.log(total);
+  console.log(yourTotal);
   console.log(subTotal);
 
   async function getOrder() {
@@ -288,7 +294,7 @@ export default function Task() {
         <span>
           {subTotal >= 0 ? (
             <>
-              Recebe:{' '}
+              Receber:{' '}
               <div style={{ color: pallete.primary }}>
                 <MdTrendingUp color={pallete.primary} /> R$
                 {numeral(subTotal).format('0,0.00')}
@@ -296,11 +302,11 @@ export default function Task() {
             </>
           ) : (
             <>
-              Paga:
+              Pagar:
               <div style={{ color: '#C44131' }}>
                 {' '}
                 <MdTrendingDown /> R$
-                {numeral(subTotal).format('0,0.00')}
+                {numeral(subTotal * -1).format('0,0.00')}
               </div>
             </>
           )}
