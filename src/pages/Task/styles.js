@@ -6,7 +6,9 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 22px 0;
-
+  @media screen and (min-width: 900px) {
+    width: 410px;
+  }
   strong {
     font-size: 24px;
     color: #ffffff;
