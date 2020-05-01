@@ -149,6 +149,11 @@ export default function Task() {
     if (tasks.length > 0) {
       if (tasks[0].project.set_date) {
         return tasks.reduce(function(a, b) {
+          console.log('tarefan', new Date(b.set_date));
+          console.log('projeto', new Date(tasks[0].project.set_date));
+          console.log(
+            new Date(tasks[0].project.set_date) < new Date(b.set_date)
+          );
           if (new Date(tasks[0].project.set_date) < new Date(b.set_date)) {
             if (b.payer_id === profile.id) {
               return a + Number(b.value) * Number(b.amount);
@@ -167,7 +172,7 @@ export default function Task() {
       return Number(yourTotal) - Number(total) / Number(members.length);
     }
     return 0;
-  }, [yourTotal, total, members]);
+  }, [yourTotal, total, members, tasks]);
 
   async function getOrder() {
     const response = await filterResult();
@@ -199,7 +204,8 @@ export default function Task() {
     const id = history.location.pathname.replace('/task/', '');
     const body = {
       totalValue: total,
-      set_date: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+
+      set_date: format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"),
     };
     const confirm = window.confirm(
       'Se quitar as dívidas irão zerar e não terá como desfazer.'
