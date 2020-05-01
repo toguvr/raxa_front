@@ -294,7 +294,7 @@ export default function Task() {
           <Avatar width={100} name="RAXA" />
         )}
       </Header>
-      <header>
+      {/* <header>
         <span>
           {subTotal >= 0 ? (
             <>
@@ -333,9 +333,9 @@ export default function Task() {
         >
           <MdAdd color="#fff" size={16} />
         </button>
-      </header>
+      </header> */}
       <Title>Extrato</Title>
-      {/* <Body>
+      <Body>
         {tasks &&
           tasks.map(task =>
             task.payer_id === profile.id ? (
@@ -380,7 +380,7 @@ export default function Task() {
               </ToPay>
             )
           )}
-      </Body> */}
+      </Body>
 
       <Dialog
         open={open}
