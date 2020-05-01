@@ -152,6 +152,10 @@ export default function Task() {
     if (tasks.length > 0) {
       if(tasks[0].project.set_date){
       return tasks.reduce(function(a, b) {
+        console.log( format(
+          addHours(new Date(tasks[0].project.set_date), 3),
+          'yyyy-MM-dd HH:mm:ss'
+        ) < format(subHours(new Date(b.created_at), 3), 'yyyy-MM-dd HH:mm:ss'))
         if (
           format(
             addHours(new Date(tasks[0].project.set_date), 3),
@@ -163,8 +167,8 @@ export default function Task() {
           }
 
           return a;
-        }}
-      }, 0);
+        }, 0);
+      }}
     }
   }, [tasks]);
 
